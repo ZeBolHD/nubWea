@@ -19,7 +19,6 @@ public class Main {
 	Weather w = new Weather();
     w.setCity(sc.nextLine());
     w.getInfo();
-    w.currentWeatherForToday();
     }
 }
 

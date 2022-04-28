@@ -1,19 +1,18 @@
 package com.studying;
 
 import com.google.gson.Gson;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 
 public class Weather extends Temp{
 
@@ -26,8 +25,10 @@ public class Weather extends Temp{
     private String weatherArray;
     public String city;
 
+    Instant instant;
+    LocalDateTime ldt;
+
     Gson gson = new Gson();
-    SimpleDateFormat formater = new SimpleDateFormat("dd");
 
     public void setCity(String city) {
         this.city = city;
@@ -36,7 +37,7 @@ public class Weather extends Temp{
     public void getInfo(){
         try {
 
-            String adress = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=5&appid=94c711ac5cd4f8c5b1da48fae97afb5a&units=metric";
+            String adress = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=10&appid=94c711ac5cd4f8c5b1da48fae97afb5a&units=metric";
 
             url = new URL(adress);
             connection = (HttpURLConnection) url.openConnection();
@@ -61,6 +62,7 @@ public class Weather extends Temp{
             e.printStackTrace();
         }
         weatherArray = buffer.toString();
+        currentWeatherForToday();
     }
 
     public void currentWeather(){
@@ -114,17 +116,25 @@ public class Weather extends Temp{
                 temp_max = temp_today.temp_max;
                 temp_min = temp_today.temp_min;
 
-                Date d = new Date(jsonObject.getJSONArray("list").getJSONObject(0).getInt("dt"));
-                String date_c = formater.format(d);
-                String date_c1 = formater.format(d);
+                instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(0).getInt("dt"));
+                ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+                int day_c = ldt.getDayOfMonth();
 
-                    for(int i = 0; date_c.equals(date_c1); i++) {
+                ArrayList<Integer> dateArray = new ArrayList<Integer>();
+
+                for(int i = 0; i!=5; i++){
+                    instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(i).getInt("dt"));
+
+                    //JSON формат всегда выводит время в UTC
+
+                    ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+                    int day = ldt.getDayOfMonth();
+                    dateArray.add(day);
+                }
+
+                    for(int i = 0; dateArray.get(i)==day_c; i++) {
                         String array = jsonObject.getJSONArray("list").getJSONObject(i).toString();
                         JSONObject wa = new JSONObject(array);
-
-                        Date d1 = new Date(jsonObject.getJSONArray("list").getJSONObject(i).getInt("dt"));
-                        date_c1 = formater.format(d1);
-                        System.out.println(date_c1);
 
                         double max = wa.getJSONObject("main").getDouble("temp_max");
                         double min = wa.getJSONObject("main").getDouble("temp_min");
@@ -136,9 +146,6 @@ public class Weather extends Temp{
                             temp_min = min;
                         }
                     }
-
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
