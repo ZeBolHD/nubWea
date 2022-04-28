@@ -10,6 +10,7 @@ public class Datchik {
     Timer timer = new Timer();
     static Random random = new Random();
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
         //Заводим датчики в постостоянный цикл
         while(true) {
