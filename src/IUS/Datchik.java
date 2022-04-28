@@ -1,11 +1,9 @@
 package IUS;
 
 import java.util.Random;
-import java.util.Timer;
 
 public class Datchik {
 
-    Timer timer = new Timer();
     static Random random = new Random();
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -20,13 +18,14 @@ public class Datchik {
 
     //Создаём метод, чтобы сверить температуру
 
-    public static void temp(int min, int max, int r){
+    public static void temp(int min, int max, int r, int time){
+        time /= 1000;
         if(r<min) {
-            System.out.println("Темпетура ниже нормы. Температура: " + r);
+            System.out.println("Темпетура ниже нормы. Температура: " + r + "°C. Период опроса: " + time + "сек.");
         }else if(r>max){
-            System.out.println("Темпетаруа выше нормы. Температура: " + r);
+            System.out.println("Темпетаруа выше нормы. Температура: " + r + "°C. Период опроса: " + time + "сек.");
         } else {
-            System.out.println("Всё в норме. Температура: " + r);
+            System.out.println("Всё в норме. Температура: " + r + "°C. Период опроса: " + time + "сек.");
         }
     }
 
@@ -38,18 +37,20 @@ public class Datchik {
         int max = 55;
         int a = 5;
 
+         //Задаём период опроса в мс
+
+         int time = 3000;
+
          //Получаем случайное число в диапозоне: min-a<x<max+a
 
         int r = random.nextInt(max + a - (min-a)) + min-a;
         try {
 
-            //Программа застывает на 3000мс
+            Thread.sleep(time);
 
-            Thread.sleep(3000);
+            //Обращаемся к методу temp
 
-            //Сверяем число с введённой температурой
-
-            temp(min, max, r);
+            temp(min, max, r, time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,10 +63,12 @@ public class Datchik {
         int a = 10;
         int r = random.nextInt(max + a - (min-a)) + min-a;
 
-        try {
-            Thread.sleep(4000);
+        int time = 2000;
 
-            temp(min, max, r);
+        try {
+            Thread.sleep(time);
+
+            temp(min, max, r, time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -78,10 +81,12 @@ public class Datchik {
         int a = 7;
         int r = random.nextInt(max + a - (min-a)) + min-a;
 
-        try {
-            Thread.sleep(1000);
+        int time = 1000;
 
-            temp(min, max, r);
+        try {
+            Thread.sleep(time);
+
+            temp(min, max, r, time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,10 +99,12 @@ public class Datchik {
         int a = 8;
         int r = random.nextInt(max + a - (min-a)) + min-a;
 
-        try {
-            Thread.sleep(1500);
+        int time = 4000;
 
-            temp(min, max, r);
+        try {
+            Thread.sleep(time);
+
+            temp(min, max, r, time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -109,9 +116,11 @@ public class Datchik {
         int a = 23;
         int r = random.nextInt(max + a - (min-a)) + min-a;
 
+        int time = 5000;
+
         try {
-            Thread.sleep(6000);
-            temp(min, max, r);
+            Thread.sleep(time);
+            temp(min, max, r, time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
