@@ -1,9 +1,7 @@
 package IUS;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Datchik {
 
@@ -12,9 +10,23 @@ public class Datchik {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
+
         //Заводим датчики в постостоянный цикл
+
         while(true) {
             datchik1();datchik2(); datchik3();datchik4(); datchik5();
+        }
+    }
+
+    //Создаём метод, чтобы сверить температуру
+
+    public static void temp(int min, int max, int r){
+        if(r<min) {
+            System.out.println("Темпетура ниже нормы. Температура: " + r);
+        }else if(r>max){
+            System.out.println("Темпетаруа выше нормы. Температура: " + r);
+        } else {
+            System.out.println("Всё в норме. Температура: " + r);
         }
     }
 
@@ -37,13 +49,7 @@ public class Datchik {
 
             //Сверяем число с введённой температурой
 
-            if(r<min) {
-                System.out.println("Темпетура ниже нормы. Температура: " + r);
-            }else if(r>max){
-                System.out.println("Темпетаруа выше нормы. Температура: " + r);
-            } else {
-                System.out.println("Всё в норме. Температура: " + r);
-            }
+            temp(min, max, r);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -58,17 +64,13 @@ public class Datchik {
 
         try {
             Thread.sleep(4000);
-            if(r<min) {
-                System.out.println("Темпетура ниже нормы. Температура: " + r);
-            }else if(r>max){
-                System.out.println("Темпетаруа выше нормы. Температура: " + r);
-            } else {
-                System.out.println("Всё в норме. Температура: " + r);
-            }
+
+            temp(min, max, r);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
     public static void datchik3(){
 
         int min = 38;
@@ -78,17 +80,13 @@ public class Datchik {
 
         try {
             Thread.sleep(1000);
-            if(r<min) {
-                System.out.println("Темпетура ниже нормы. Температура: " + r);
-            }else if(r>max){
-                System.out.println("Темпетаруа выше нормы. Температура: " + r);
-            } else {
-                System.out.println("Всё в норме. Температура: " + r);
-            }
+
+            temp(min, max, r);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
     public static void datchik4(){
 
         int min = 10;
@@ -98,13 +96,8 @@ public class Datchik {
 
         try {
             Thread.sleep(1500);
-            if(r<min) {
-                System.out.println("Темпетура ниже нормы. Температура: " + r);
-            }else if(r>max){
-                System.out.println("Темпетаруа выше нормы. Температура: " + r);
-            } else {
-                System.out.println("Всё в норме. Температура: " + r);
-            }
+
+            temp(min, max, r);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -118,15 +111,10 @@ public class Datchik {
 
         try {
             Thread.sleep(6000);
-            if(r<min) {
-                System.out.println("Темпетура ниже нормы. Температура: " + r);
-            }else if(r>max){
-                System.out.println("Темпетаруа выше нормы. Температура: " + r);
-            } else {
-                System.out.println("Всё в норме. Температура: " + r);
-            }
+            temp(min, max, r);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 }
